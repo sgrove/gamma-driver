@@ -139,24 +139,25 @@
 
 (defn texture-data-type [d]
   ;; ImageData | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement
-  (cond
-    (or (instance? js/ImageData d)
-        (instance? js/HTMLImageElement d)
-        (instance? js/HTMLCanvasElement d)
-        (instance? js/HTMLVideoElement d))      :image
-    (or (instance? js/Float32Array d) (nil? d)) :pixels
-    :else                                       (throw (js/Error. (str "texture data type not supported: " (pr-str d)) )))
+  (if (or (instance? js/ImageData d)
+          (instance? js/HTMLImageElement d)
+          (instance? js/HTMLCanvasElement d)
+          (instance? js/HTMLVideoElement d))
+    :image
+    (if (or (instance? js/Float32Array d) (nil? d))
+      :pixels
+      (throw (js/Error. (str "texture data type not supported: " (pr-str d)) ))))
   ;; arraybufferview
   )
 
 
 (def texture-formats
-  {:alpha           ggl/ALPHA
-   :depth           ggl/DEPTH_COMPONENT
-   :luminance       ggl/LUMINANCE
+  {:depth ggl/DEPTH_COMPONENT
+   :alpha ggl/ALPHA
+   :luminance ggl/LUMINANCE
    :luminance-alpha ggl/LUMINANCE_ALPHA
-   :rgb             ggl/RGB
-   :rgba            ggl/RGBA})
+   :rgb ggl/RGB
+   :rgba ggl/RGBA})
 
 (def texture-data-types
   {:unsigned-byte          ggl/UNSIGNED_BYTE

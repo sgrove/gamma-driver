@@ -110,7 +110,7 @@
   "Binds the program's variables as specified in spec. "
   [this prog spec]
   (if (satisfies? gdp/IBind this)
-    (gdp/bind this program spec)
+    (gdp/bind this prog spec)
     (bind/bind
       ;; need to pass these in to avoid cyclic dependency
      {:program              program
@@ -121,7 +121,7 @@
       :bind-attribute       bind-attribute
       :bind-texture-uniform bind-texture-uniform
       :bind-uniform         bind-uniform}
-      this prog spec)))
+     this prog spec)))
 
 
 ;; IDraw
